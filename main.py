@@ -6,17 +6,20 @@ import os
 # module import
 from server import database
 from modules import market
+from modules import bull
 
 if __name__ == '__main__':
-    ABS_PATH = sys.path[0] + os.sep
+    #ABS_PATH = sys.path[0] + os.sep
 
     # config file reader
-    config = configparser.ConfigParser()
-    config.read('app.cfg')
+    #config = configparser.ConfigParser()
+    #config.read('app.cfg')
 
     # db connection
-    db_info = config['db_info']
-    db = database.db()
+    #db_info = config['db_info']
+    #db = database.db()
 
-    market.get_market()
+    #market.get_market()
+
+    print(bull.get_bull(['KRW-BTC', 'BTC-DOGE']))
 
