@@ -7,6 +7,7 @@ import os
 from server import database
 from modules import market
 from modules import bull
+from modules import ui
 
 if __name__ == '__main__':
     #ABS_PATH = sys.path[0] + os.sep
@@ -21,5 +22,8 @@ if __name__ == '__main__':
 
     #market.get_market()
 
-    print(bull.get_bull(['KRW-BTC', 'BTC-DOGE']))
+    print(bull.get_bull('KRW-BTC'))
+
+    
+    ui.get_window()
 
