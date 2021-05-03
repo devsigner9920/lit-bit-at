@@ -1,25 +1,60 @@
 import sys
+
+from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5 import uic
 
-class main_window(QMainWindow):
+from modules import market
+from modules import bull
+
+main_form_class = uic.loadUiType("ui/main_window.ui")[0]
+bull_form_class = uic.loadUiType("ui/bull_window.ui")[0]
+
+
+class main_window(QMainWindow, main_form_class):
     def __init__(self):
-        cls = type(self)
-        if not hasattr(cls, "_init"):
-            print("__init__ is called\n")
-            super().__init__()
-            self.setGeometry(100, 200, 300, 400)
-            cls._init = True
-         
+        super(main_window, self).__init__()
+        self.setupUi(self)
+        # self.setGeometry(100, 200, 300, 400)
+        # self.setWindowTitle("lit bit")
+        self.btn_bull.clicked.connect(self.open_bull_window)
 
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "_instance"):
-            print("__new__ is called\n")
-            cls._instance = super().__new__(cls)
+        markets = market.get_market()
+        bull_list = []
+        for mk in markets:
 
-            return cls._instance
+            bull_list.append(bull.get_bull(mk['market']))
+
+        self.tbl_bull.setRowCount(len(bull_list))
+
+        timer = QTimer(self)
+        timer.start(5000)
+        timer.timeout.connect(self.timeout)
+
+    @pyqtSlot()
+    def open_bull_window(self):
+        # QStackedWidget.setCurrentIndex(QStackedWidget.currentIndex() + 1)
+        print("test?!")
+
+    def timeout(self):
+        print("5초에요!!")
+
+
+class bull_window(QDialog, bull_form_class):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        # self.setGeometry(100, 200, 300, 400)
+        # self.setWindowTitle("lit bit")
+
 
 def get_window():
     app = QApplication(sys.argv)
-    window = main_window()
-    window.show()
+
+    # layout instance
+    main = main_window()
+    bull = bull_window()
+
+    main.show()
+
     app.exec_()

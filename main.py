@@ -22,8 +22,7 @@ if __name__ == '__main__':
 
     #market.get_market()
 
-    print(bull.get_bull('KRW-BTC'))
-
+    print(bull.get_bull('BTC-DOGE'))
     
     ui.get_window()
 
