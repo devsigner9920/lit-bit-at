@@ -22,7 +22,6 @@ class main_window(QMainWindow, main_form_class):
         markets = market.get_market()
         bull_list = []
         for mk in markets:
-
             bull_list.append(bull.get_bull(mk['market']))
 
         self.tbl_bull.setRowCount(len(bull_list))
